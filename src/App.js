@@ -1,10 +1,16 @@
 import React from 'react'
-import DATA from './data'
+import DATA, { getAirlineById, getAirportByCode } from './data'
 import Table from './components/Table'
 import './App.css'
 
 const App = () => {
-  const routes = DATA.routes
+  const routes = DATA.routes.map((route) => {
+    return {
+      airline: getAirlineById(route.airline).name,
+      src: getAirportByCode(route.src).name,
+      dest: getAirportByCode(route.dest).name,
+    }
+  })
 
   const cols = [
     { name: 'Airline', property: 'airline' },
