@@ -45,6 +45,13 @@ const App = () => {
     return getAirportByCode(value).name
   }
 
+  const resetFilters = () => {
+    setAirline('all')
+    setAirport('all')
+  }
+
+  const defaultsSelected = airline === 'all' && airport === 'all'
+
   const columns = [
     { name: 'Airline', property: 'airline' },
     { name: 'Source Airport', property: 'src' },
@@ -64,13 +71,18 @@ const App = () => {
             options={filteredAirlines}
             onSelect={selectAirline}
             allTitle='All Airlines'
+            value={airline}
           />
           flying in or out of
           <Select
             options={filteredAirports}
             onSelect={selectAirport}
             allTitle='All Airports'
+            value={airport}
           />
+          <button onClick={resetFilters} disabled={defaultsSelected}>
+            Show All Routes
+          </button>
         </p>
 
         <Table
