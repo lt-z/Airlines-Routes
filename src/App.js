@@ -4,15 +4,16 @@ import Table from './components/Table'
 import './App.css'
 
 const App = () => {
-  const routes = DATA.routes.map((route) => {
-    return {
-      airline: getAirlineById(route.airline).name,
-      src: getAirportByCode(route.src).name,
-      dest: getAirportByCode(route.dest).name,
-    }
-  })
+  const routes = DATA.routes
 
-  const cols = [
+  const formatValue = (property, value) => {
+    if (property === 'airline') {
+      return getAirlineById(value).name
+    }
+    return getAirportByCode(value).name
+  }
+
+  const columns = [
     { name: 'Airline', property: 'airline' },
     { name: 'Source Airport', property: 'src' },
     { name: 'Destination Airport', property: 'dest' },
@@ -25,7 +26,12 @@ const App = () => {
       </header>
       <section>
         <p>Welcome to the app!</p>
-        <Table routes={routes} cols={cols} />
+        <Table
+          className='routes-table'
+          routes={routes}
+          columns={columns}
+          format={formatValue}
+        />
       </section>
     </div>
   )
