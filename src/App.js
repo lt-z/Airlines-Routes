@@ -1,10 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
 import DATA, { getAirlineById, getAirportByCode } from './data'
 import Table from './components/Table'
+import Select from './components/Select'
 import './App.css'
 
 const App = () => {
-  const routes = DATA.routes
+  const [airline, setAirline] = useState('all')
+  // const [airport, setAirport] = useState("all");
+
+  const filteredRoutes = DATA.routes.filter((route) => {
+    return route.airline === airline || airline === 'all'
+  })
+
+  const filteredAirlines = DATA.airlines.map((airline) => {
+    const active = !!filteredRoutes.find(
+      (route) => route.airline === airline.id
+    )
+    return { ...airline, active }
+  })
+
+  const selectAirline = (value) => {
+    if (value !== 'all') {
+      value = Number(value)
+    }
+    setAirline(value)
+  }
 
   const formatValue = (property, value) => {
     if (property === 'airline') {
@@ -26,9 +46,14 @@ const App = () => {
       </header>
       <section>
         <p>Welcome to the app!</p>
+        <Select
+          options={filteredAirlines}
+          onSelect={selectAirline}
+          allTitle='All Airlines'
+        />
         <Table
           className='routes-table'
-          routes={routes}
+          routes={filteredRoutes}
           columns={columns}
           format={formatValue}
         />
