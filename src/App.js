@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import DATA, { getAirlineById, getAirportByCode } from './data'
 import Table from './components/Table'
 import Select from './components/Select'
+import Map from './components/Map'
 import './App.css'
 
 const App = () => {
@@ -64,7 +65,7 @@ const App = () => {
         <h1 className='title'>Airline Routes</h1>
       </header>
       <section>
-        <p>Welcome to the app!</p>
+        <Map routes={filteredRoutes} />
         <p>
           Show routes on
           <Select
@@ -84,7 +85,6 @@ const App = () => {
             Show All Routes
           </button>
         </p>
-
         <Table
           className='routes-table'
           routes={filteredRoutes}
